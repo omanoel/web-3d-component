@@ -12,15 +12,14 @@
     "./web-3d-component.js": "./dist/src/web-3d-component.js"
   },
   "scripts": {
+    "start": "vite",
+    "build": "tsc && npm run analyze -- --exclude dist && vite build",
+    "preview": "vite preview",
     "analyze": "cem analyze --litelement",
-    "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"web-dev-server\"",
-    "build": "tsc && npm run analyze -- --exclude dist",
     "prepublish": "tsc && npm run analyze -- --exclude dist",
     "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
     "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
-    "prepare": "husky",
-    "storybook": "tsc && npm run analyze -- --exclude dist && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"storybook dev -p 8080\"",
-    "storybook:build": "tsc && npm run analyze -- --exclude dist && storybook build"
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -38,16 +37,9 @@
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.3",
     "@open-wc/eslint-config": "^12.0.3",
-    "@storybook/addon-a11y": "^7.6.20",
-    "@storybook/addon-essentials": "^7.6.20",
-    "@storybook/addon-links": "^7.6.20",
-    "@storybook/web-components": "^7.6.20",
     "@types/three": "^0.172.0",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
     "@typescript-eslint/parser": "^7.16.0",
-    "@web/dev-server": "^0.4.6",
-    "@web/storybook-builder": "^0.1.16",
-    "@web/storybook-framework-web-components": "^0.1.2",
     "concurrently": "^8.2.2",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
@@ -55,9 +47,9 @@
     "husky": "^9.0.11",
     "lint-staged": "^15.2.7",
     "prettier": "^3.3.2",
-    "storybook": "^7.6.20",
     "tslib": "^2.6.3",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "vite": "^6.0.11"
   },
   "customElements": "custom-elements.json",
   "eslintConfig": {

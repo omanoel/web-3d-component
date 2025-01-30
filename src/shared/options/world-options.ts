@@ -7,6 +7,7 @@ import { SharedPositionOptions } from "./common-options";
 export interface Web3dComponentWorldOptions {
   worldOrigin: SharedPositionOptions;
   displayStats: boolean;
+  reversed: boolean;
 }
 
 export const DEFAULT_WORLD_OPTIONS: Web3dComponentWorldOptions = {
@@ -15,5 +16,6 @@ export const DEFAULT_WORLD_OPTIONS: Web3dComponentWorldOptions = {
     y: 0,
     z: 0
   },
-  displayStats: true
+  displayStats: true,
+  reversed: true
 };
