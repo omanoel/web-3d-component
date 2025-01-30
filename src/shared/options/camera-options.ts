@@ -4,7 +4,7 @@ import { SharedPositionOptions } from "./common-options";
  * Represents the options available to alter the properties
  * of the Camera object rendered by the library
  */
-export interface ThreeDRendererCameraOptions {
+export interface Web3dComponentCameraOptions {
   /**
    * Camera frustum vertical field of view, from bottom to top of view, in degrees.
    *
@@ -43,7 +43,7 @@ export interface ThreeDRendererCameraOptions {
   lookAt: SharedPositionOptions;
 }
 
-export const DEFAULT_CAMERA_OPTIONS: ThreeDRendererCameraOptions = {
+export const DEFAULT_CAMERA_OPTIONS: Web3dComponentCameraOptions = {
   fov: 50,
   aspect: 1,
   near: 0.1,

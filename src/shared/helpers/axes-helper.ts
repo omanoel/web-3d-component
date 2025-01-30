@@ -1,30 +1,34 @@
 import { ArrowHelper, Object3D, Vector3 } from 'three';
-import { AbstractOnlyTickableGroup, IOnlyTickable, IConfigurable, ITickParams } from '../abstract/abstract-group';
+import { IOnlyTickable, IConfigurable, ITickParams } from '../abstract/abstract-interfaces';
 import { SharedAxisTypes } from '../options/common-options';
-import { DEFAULT_AXES_HELPER_OPTIONS, ThreeDRendererAxesHelperOptions } from '../options/axes-helper-options';
+import { DEFAULT_AXES_HELPER_OPTIONS, Web3dComponentAxesHelperOptions } from '../options/axes-helper-options';
 import { GetOptionValueUtil } from '../utils/get-option-value-util';
+import { AbstractOnlyTickableGroup } from '../abstract/abstract-only-tickable-group';
 
-export class ThreeDRendererAxesHelper
+export class Web3dComponentAxesHelper
   extends AbstractOnlyTickableGroup<IOnlyTickable>
-  implements IConfigurable<ThreeDRendererAxesHelperOptions> {
+  implements IConfigurable<Web3dComponentAxesHelperOptions> {
   //
   public static readonly AXIS_ARROW_NAME = 'axis-arrow-';
+
   //
   public type: string;
+
   //
   private _originalDistanceToTarget: number;
+
   // =======================================
   // CONSTRUCTOR
   // =======================================
   constructor(
     distanceToTarget: number,
     initActions?: Partial<IOnlyTickable>,
-    initOptions?: Partial<ThreeDRendererAxesHelperOptions>
+    initOptions?: Partial<Web3dComponentAxesHelperOptions>
   ) {
     //
     super(initActions);
     //
-    this.type = 'ThreeDRendererAxesHelper';
+    this.type = 'Web3dComponentAxesHelper';
     //
     this.userData.options = {
       ...DEFAULT_AXES_HELPER_OPTIONS,
@@ -41,11 +45,11 @@ export class ThreeDRendererAxesHelper
   // PUBLIC
   // =======================================
   public updateWithOptions(
-    options: Partial<ThreeDRendererAxesHelperOptions>
+    options: Partial<Web3dComponentAxesHelperOptions>
   ): void {
     if (options.x !== undefined) {
       const axisX = this.getObjectByName(
-        ThreeDRendererAxesHelper.AXIS_ARROW_NAME + 'x'
+        `${Web3dComponentAxesHelper.AXIS_ARROW_NAME}x`
       );
       if (axisX !== undefined) {
         //
@@ -55,6 +59,7 @@ export class ThreeDRendererAxesHelper
       this.userData.options.autoScale = options.autoScale;
     }
   }
+
   public tick(_deltaTime: number, params: ITickParams): void {
     this._update(params.distance, params.targetPos);
   }
@@ -87,7 +92,7 @@ export class ThreeDRendererAxesHelper
   }
 
   private _initAxisArrow(
-    axis: keyof Pick<ThreeDRendererAxesHelperOptions, SharedAxisTypes>
+    axis: keyof Pick<Web3dComponentAxesHelperOptions, SharedAxisTypes>
   ): ArrowHelper {
     const arrowOptions = DEFAULT_AXES_HELPER_OPTIONS[axis];
     const arrow = new ArrowHelper(
@@ -100,12 +105,12 @@ export class ThreeDRendererAxesHelper
       this.userData.options.length,
       arrowOptions.color
     );
-    arrow.name = ThreeDRendererAxesHelper.AXIS_ARROW_NAME + axis;
+    arrow.name = Web3dComponentAxesHelper.AXIS_ARROW_NAME + axis;
     return arrow;
   }
 
   private _getAxisArrowDirection(
-    axis: keyof Pick<ThreeDRendererAxesHelperOptions, SharedAxisTypes>,
+    axis: keyof Pick<Web3dComponentAxesHelperOptions, SharedAxisTypes>,
     inverted: boolean
   ): Vector3 {
     let direction: Vector3;
@@ -129,7 +134,7 @@ export class ThreeDRendererAxesHelper
   private _updateAxisArrowWithOptions(
     axisArrow: Object3D,
     axisArrowOptionsAttributeName: keyof Pick<
-      ThreeDRendererAxesHelperOptions,
+      Web3dComponentAxesHelperOptions,
       SharedAxisTypes
     >
   ): void {

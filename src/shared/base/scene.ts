@@ -1,15 +1,17 @@
 import { Color, Fog, Object3D, Scene, Vector3 } from 'three';
-import { DEFAULT_SCENE_OPTIONS, ThreeDRendererSceneOptions } from '../options/scene-options';
-import { IConfigurable } from '../abstract/abstract-group';
+import { DEFAULT_SCENE_OPTIONS, Web3dComponentSceneOptions } from '../options/scene-options';
+import { IConfigurable } from '../abstract/abstract-interfaces';
 
 
-export class ThreeDRendererScene extends Scene
-  implements IConfigurable<ThreeDRendererSceneOptions> {
+export class Web3dComponentScene extends Scene
+  implements IConfigurable<Web3dComponentSceneOptions> {
   private _clickables: Object3D[] = [];
+
   private _tickables: Object3D[] = [];
+
   private _cleanables: Object3D[] = [];
 
-  constructor(initOptions?: Partial<ThreeDRendererSceneOptions>) {
+  constructor(initOptions?: Partial<Web3dComponentSceneOptions>) {
     super();
     const options = {
       ...DEFAULT_SCENE_OPTIONS,
@@ -23,7 +25,7 @@ export class ThreeDRendererScene extends Scene
     // this.fog = new Fog(0x000000, 0, 100);
   }
 
-  public updateWithOptions(options: Partial<ThreeDRendererSceneOptions>): void {
+  public updateWithOptions(options: Partial<Web3dComponentSceneOptions>): void {
     if (options.backgroundColor !== undefined) {
       this.background = new Color(options.backgroundColor);
     }
@@ -34,12 +36,15 @@ export class ThreeDRendererScene extends Scene
   public get countObjects(): number {
     return this._countObjects(this);
   }
+
   public get cleanableObjects(): Object3D[] {
     return this._cleanables;
   }
+
   public get tickableObjects(): Object3D[] {
     return this._tickables;
   }
+
   public get clickableObjects(): Object3D[] {
     return this._clickables;
   }
@@ -49,18 +54,21 @@ export class ThreeDRendererScene extends Scene
     this._addObjectToClickables(obj);
     this._addObjectToTickables(obj);
   }
+
   public removeObjectById(id: number): void {
     const obj = this.getObjectById(id);
     if (obj !== undefined) {
       this.removeObject(obj);
     }
   }
+
   public removeObject(obj: Object3D): void {
     this._delObjectToCleanables(obj);
     this._delObjectToClickables(obj);
     this._delObjectToTickables(obj);
     obj.removeFromParent();
   }
+
   /**
    * Clean scene about cleanable objects
    * 
@@ -69,6 +77,7 @@ export class ThreeDRendererScene extends Scene
   public cleanScene(): void {
     this._cleanables.forEach((c) => this.removeObject(c));
   }
+
   public hideByIds(ids: number[]): void {
     ids.forEach((id: number) => {
       const obj = this.getObjectById(id);
@@ -78,6 +87,7 @@ export class ThreeDRendererScene extends Scene
       }
     });
   }
+
   public showByIds(ids: number[]): void {
     ids.forEach((id: number) => {
       const obj = this.getObjectById(id);
@@ -87,6 +97,7 @@ export class ThreeDRendererScene extends Scene
       }
     });
   }
+
   public getObjectsByType(type: string, objs: Object3D[]): Object3D[] {
     const items: Object3D[] = [];
     objs.forEach((c) => {
@@ -99,12 +110,15 @@ export class ThreeDRendererScene extends Scene
     });
     return items;
   }
+
   public showByType(type: string): void {
     this.showByIds(this.getObjectsByType(type, this.children).map((o) => o.id));
   }
+
   public hideByType(type: string): void {
     this.hideByIds(this.getObjectsByType(type, this.children).map((o) => o.id));
   }
+
   // ================== PRIVATE ====================
   private _countObjects(obj: Object3D): number {
     let z = 1;
@@ -113,6 +127,7 @@ export class ThreeDRendererScene extends Scene
     });
     return z;
   }
+
   private _addObjectToClickables(obj: Object3D): void {
     if (obj.userData.clickable && this._clickables.indexOf(obj) === -1) {
       this._clickables.push(obj);
@@ -123,6 +138,7 @@ export class ThreeDRendererScene extends Scene
       });
     }
   }
+
   private _addObjectToTickables(obj: Object3D): void {
     if (obj.userData.tickable && this._tickables.indexOf(obj) === -1) {
       this._tickables.push(obj);
@@ -133,6 +149,7 @@ export class ThreeDRendererScene extends Scene
       });
     }
   }
+
   private _addObjectToCleanables(obj: Object3D): void {
     if (obj.userData.cleanable && this._cleanables.indexOf(obj) === -1) {
       this._cleanables.push(obj);
@@ -143,6 +160,7 @@ export class ThreeDRendererScene extends Scene
       });
     }
   }
+
   private _delObjectToClickables(obj: Object3D): void {
     if (obj.userData.clickable) {
       this._clickables.splice(this._clickables.indexOf(obj), 1);
@@ -153,6 +171,7 @@ export class ThreeDRendererScene extends Scene
       });
     }
   }
+
   private _delObjectToTickables(obj: Object3D): void {
     if (obj.userData.tickable) {
       this._tickables.splice(this._tickables.indexOf(obj), 1);
@@ -163,6 +182,7 @@ export class ThreeDRendererScene extends Scene
       });
     }
   }
+
   private _delObjectToCleanables(obj: Object3D): void {
     if (obj.userData.cleanable) {
       this._cleanables.splice(this._cleanables.indexOf(obj), 1);

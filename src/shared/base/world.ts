@@ -1,41 +1,49 @@
 import { Controls, Intersection, Object3D, Vector3 } from 'three';
-import { ThreeDRendererCamera } from './camera';
-import { ThreeDRendererOrbitControls } from './orbit-controls';
-import { ThreeDRendererRaycaster } from './raycaster';
-import { ThreeDRendererResizer } from './resizer';
-import { ThreeDRendererScene } from './scene';
-import { ThreeDRendererWebGlRenderer } from './web-gl-renderer';
-import { DEFAULT_WORLD_OPTIONS, ThreeDRendererWorldOptions } from '../options/world-options';
+import { Web3dComponentCamera } from './camera';
+import { Web3dComponentOrbitControls } from '../controls/orbit-controls';
+import { Web3dComponentRaycaster } from './raycaster';
+import { Web3dComponentResizer } from './resizer';
+import { Web3dComponentScene } from './scene';
+import { Web3dComponentWebGlRenderer } from './web-gl-renderer';
+import { DEFAULT_WORLD_OPTIONS, Web3dComponentWorldOptions } from '../options/world-options';
 import { GetOptionValueUtil } from '../utils/get-option-value-util';
-import { ITickParams } from '../abstract/abstract-group';
+import { ITickParams } from '../abstract/abstract-interfaces';
 import { SharedBoundingBoxUtil } from '../utils/bounding-box-util';
 import { FindObjectUtil } from '../utils/find-object-util';
 import { MainGroup } from './main-group';
+import { WebGL } from 'three/examples/jsm/Addons.js';
 
-export class ThreeDRendererWorld {
+export class Web3dComponentWorld {
 
-  protected _viewportElement: HTMLDivElement;
+  protected _viewportElement!: HTMLDivElement;
 
-  protected _renderer: ThreeDRendererWebGlRenderer;
+  protected _renderer!: Web3dComponentWebGlRenderer;
 
-  protected _camera: ThreeDRendererCamera;
+  protected _camera!: Web3dComponentCamera;
 
-  protected _scene: ThreeDRendererScene;
+  protected _scene!: Web3dComponentScene;
 
-  protected _controls: ThreeDRendererOrbitControls;
+  protected _controls!: Web3dComponentOrbitControls;
 
-  protected _raycaster: ThreeDRendererRaycaster;
+  protected _raycaster!: Web3dComponentRaycaster;
 
-  protected _resizer: ThreeDRendererResizer;
+  protected _resizer!: Web3dComponentResizer;
 
-  protected _options: ThreeDRendererWorldOptions;
+  protected _options!: Web3dComponentWorldOptions;
 
-  protected _mainGroup: MainGroup;
+  protected _mainGroup!: MainGroup;
 
   private _raytracerInteractions: Object3D[] = [];
 
   constructor(viewportElement: HTMLDivElement,
-    initOptions?: Partial<ThreeDRendererWorldOptions>) {
+    initOptions?: Partial<Web3dComponentWorldOptions>) {
+
+    // WebGL available ?
+    if (!WebGL.isWebGL2Available()) {
+      const warning = WebGL.getWebGL2ErrorMessage();
+      viewportElement.appendChild(warning);
+      return;
+    }
 
     //
     this._viewportElement = viewportElement;
@@ -45,16 +53,16 @@ export class ThreeDRendererWorld {
       ...initOptions
     };
 
-    this._renderer = new ThreeDRendererWebGlRenderer(
+    this._renderer = new Web3dComponentWebGlRenderer(
       this._viewportElement,
     );
 
-    this._scene = new ThreeDRendererScene();
-    this._camera = new ThreeDRendererCamera(this._options.worldOrigin);
-    this._controls = new ThreeDRendererOrbitControls(this._camera, this._viewportElement);
-    this._raycaster = new ThreeDRendererRaycaster(this._viewportElement, this._renderer, this._scene, this._camera);
+    this._scene = new Web3dComponentScene();
+    this._camera = new Web3dComponentCamera(this._options.worldOrigin);
+    this._controls = new Web3dComponentOrbitControls(this._camera, this._viewportElement);
+    this._raycaster = new Web3dComponentRaycaster(this._viewportElement, this._renderer, this._scene, this._camera);
 
-    this._resizer = new ThreeDRendererResizer(
+    this._resizer = new Web3dComponentResizer(
       this._viewportElement,
       this._renderer,
       this._camera,
@@ -68,7 +76,7 @@ export class ThreeDRendererWorld {
   }
 
 
-  public get options(): ThreeDRendererWorldOptions {
+  public get options(): Web3dComponentWorldOptions {
     return this._options;
   }
 
@@ -104,28 +112,35 @@ export class ThreeDRendererWorld {
     }
     this._scene.addObject(obj);
   }
+
   public removeObjectById(id: number): void {
     this._scene.removeObjectById(id);
   }
+
   public getObjectById(id: number): Object3D | undefined {
     return this._scene.getObjectById(id);
   }
+
   public cleanScene(): void {
     this._scene.cleanScene();
     this._raytracerInteractions.length = 0;
     this._mainGroup.children.length = 0;
   }
+
   public dispose(): void {
     this._controls.dispose();
     this._raycaster.dispose();
   }
+
   public destroy(): void {
     this.dispose();
     this._scene.clear();
   }
+
   public resetView(): void {
     this._controls.resetView();
   }
+
   public focusView(objects: Object3D[]): void {
     const minMax = SharedBoundingBoxUtil.computeFromObjects(
       objects.length > 0 ? objects : this._scene.cleanableObjects
@@ -147,18 +162,22 @@ export class ThreeDRendererWorld {
       type: 'change'
     });
   }
+
   public hideByIds(ids: number[]): void {
     this._scene.hideByIds(ids);
     this.render();
   }
+
   public showByIds(ids: number[]): void {
     this._scene.showByIds(ids);
     this.render();
   }
+
   public showByType(type: string): void {
     this._scene.showByType(type);
     this.render();
   }
+
   public hideByType(type: string): void {
     this._scene.hideByType(type);
     this.render();

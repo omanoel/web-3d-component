@@ -1,4 +1,4 @@
-export interface ThreeDRendererOrbitControlsOptions {
+export interface Web3dComponentOrbitControlsOptions {
   resetKey: string;
   toggleEnabledKey: string;
   minDistance: number;
@@ -8,7 +8,7 @@ export interface ThreeDRendererOrbitControlsOptions {
   rangeFactor: number;
 }
 
-export const DEFAULT_ORBIT_CONTROLS_OPTIONS: ThreeDRendererOrbitControlsOptions = {
+export const DEFAULT_ORBIT_CONTROLS_OPTIONS: Web3dComponentOrbitControlsOptions = {
   resetKey: 'Escape',
   toggleEnabledKey: 'Delete',
   minDistance: 0.01,

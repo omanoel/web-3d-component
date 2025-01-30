@@ -1,6 +1,6 @@
 import { html, css, LitElement, PropertyValues } from 'lit';
 import { query } from 'lit/decorators.js';
-import { MyWorld } from './shared/my-world';
+import { MyWorld } from './story/my-world';
 
 export class Web3dComponent extends LitElement {
 
@@ -10,6 +10,13 @@ export class Web3dComponent extends LitElement {
   viewportElement!: HTMLDivElement;
 
   myWorld: MyWorld | undefined;
+
+  handleTriggerEvent: (e: Event) => void;
+
+  constructor() {
+    super();
+    this.handleTriggerEvent = this.triggerEvent.bind(this);
+  }
 
   static get styles() {
     return css`
@@ -21,8 +28,7 @@ export class Web3dComponent extends LitElement {
           `;
   }
 
-  async firstUpdated(_changedProperties: PropertyValues) {
-    await new Promise(r => setTimeout(r, 0));
+  firstUpdated(_changedProperties: PropertyValues) {
 
     this.myWorld = new MyWorld(this.viewportElement);
     if (this.myWorld.isAvailable) {
@@ -32,14 +38,14 @@ export class Web3dComponent extends LitElement {
     this.requestUpdate();
   }
 
-  connectedCallback() {
+  connectedCallback(): void {
     super.connectedCallback();
-    document.addEventListener('web-3d-component-event', async (e: any) => {
-      if (e && e.detail && e.detail.eventId) {
-        const eventId = e.detail.eventId;
-        this.myWorld?.triggerEvent(eventId);
-      }
-    });
+    document.addEventListener('web-3d-component-event', this.handleTriggerEvent, false);
+  }
+
+  disconnectedCallback(): void {
+    super.disconnectedCallback();
+    document.removeEventListener('web-3d-component-event', this.handleTriggerEvent, false)
   }
 
   render() {
@@ -48,5 +54,12 @@ export class Web3dComponent extends LitElement {
       <div id="web-3d-component-viewport"></div>
       ${loading}
     `;
+  }
+
+  triggerEvent(e: Event) {
+    if (e && e instanceof CustomEvent && e.detail && e.detail.eventId) {
+      const { eventId } = e.detail;
+      this.myWorld?.triggerEvent(eventId);
+    }
   }
 } 

@@ -1,7 +1,7 @@
 import { PerspectiveCamera } from "three";
 import { FirstPersonControlsJsm } from "../jsm/first-person-controls-jsm";
 
-export class ThreeDRendererFirstPersonControls extends FirstPersonControlsJsm {
+export class Web3dComponentFirstPersonControls extends FirstPersonControlsJsm {
 
   constructor(
     camera: PerspectiveCamera,

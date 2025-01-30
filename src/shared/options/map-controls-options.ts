@@ -1,4 +1,4 @@
-export interface ThreeDRendererMapControlsOptions {
+export interface Web3dComponentMapControlsOptions {
   resetKey: string;
   minDistance: number;
   maxDistance: number;
@@ -7,7 +7,7 @@ export interface ThreeDRendererMapControlsOptions {
   rangeFactor: number;
 }
 
-export const DEFAULT_MAP_CONTROLS_OPTIONS: ThreeDRendererMapControlsOptions = {
+export const DEFAULT_MAP_CONTROLS_OPTIONS: Web3dComponentMapControlsOptions = {
   resetKey: 'Escape',
   minDistance: 0.01,
   maxDistance: Infinity,

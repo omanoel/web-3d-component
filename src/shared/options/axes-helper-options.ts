@@ -5,7 +5,7 @@ import { SharedObject3DOptions } from './common-options';
  * Represents the options available to alter the properties
  * of the AxisHelper (AxisArrow[]) object(s) rendered by the library
  */
-export interface ThreeDRendererAxesHelperOptions extends SharedObject3DOptions {
+export interface Web3dComponentAxesHelperOptions extends SharedObject3DOptions {
   /**
    * Length of the Axis Arrow
    *
@@ -24,17 +24,17 @@ export interface ThreeDRendererAxesHelperOptions extends SharedObject3DOptions {
    * Represents the options available to alter the properties
    * of the X AxisArrow object rendered by the library
    */
-  x: ThreeDRendererAxisHelperOptions;
+  x: Web3dComponentAxisHelperOptions;
   /**
    * Represents the options available to alter the properties
    * of the Y AxisArrow object rendered by the library
    */
-  y: ThreeDRendererAxisHelperOptions;
+  y: Web3dComponentAxisHelperOptions;
   /**
    * Represents the options available to alter the properties
    * of the Z AxisArrow object rendered by the library
    */
-  z: ThreeDRendererAxisHelperOptions;
+  z: Web3dComponentAxisHelperOptions;
   /**
    * Color of all the axis arrows.
    *
@@ -47,7 +47,7 @@ export interface ThreeDRendererAxesHelperOptions extends SharedObject3DOptions {
  * Represents the options available to alter the properties
  * of the AxisArrow object rendered by the library
  */
-export interface ThreeDRendererAxisHelperOptions extends SharedObject3DOptions {
+export interface Web3dComponentAxisHelperOptions extends SharedObject3DOptions {
   /**
    * Invert the Axis Arrow if true
    *
@@ -62,7 +62,7 @@ export interface ThreeDRendererAxisHelperOptions extends SharedObject3DOptions {
   color: ColorRepresentation;
 }
 
-export const DEFAULT_AXES_HELPER_OPTIONS: ThreeDRendererAxesHelperOptions = {
+export const DEFAULT_AXES_HELPER_OPTIONS: Web3dComponentAxesHelperOptions = {
   visible: true,
   length: 2,
   autoScale: false,

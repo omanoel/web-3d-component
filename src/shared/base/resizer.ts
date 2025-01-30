@@ -1,15 +1,15 @@
-import { ThreeDRendererWebGlRenderer } from './web-gl-renderer';
-import { ThreeDRendererCamera } from './camera';
+import { Web3dComponentWebGlRenderer } from './web-gl-renderer';
+import { Web3dComponentCamera } from './camera';
 
 
-export class ThreeDRendererResizer {
+export class Web3dComponentResizer {
   // =======================================
   // CONSTRUCTOR
   // =======================================
   constructor(
     viewportElement: HTMLDivElement,
-    renderer: ThreeDRendererWebGlRenderer,
-    camera: ThreeDRendererCamera,
+    renderer: Web3dComponentWebGlRenderer,
+    camera: Web3dComponentCamera,
   ) {
     this._setSize(
       viewportElement.clientWidth,
@@ -50,8 +50,8 @@ export class ThreeDRendererResizer {
   private _setSize(
     width: number,
     height: number,
-    renderer: ThreeDRendererWebGlRenderer,
-    camera: ThreeDRendererCamera,
+    renderer: Web3dComponentWebGlRenderer,
+    camera: Web3dComponentCamera,
   ): void {
     if (width > 0 && height > 0) {
       camera.aspect = width / height;

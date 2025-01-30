@@ -1,15 +1,15 @@
 import { PerspectiveCamera } from "three";
 import { MapControls } from "three/examples/jsm/Addons.js";
-import { DEFAULT_MAP_CONTROLS_OPTIONS, ThreeDRendererMapControlsOptions } from "../options/map-controls-options";
+import { DEFAULT_MAP_CONTROLS_OPTIONS, Web3dComponentMapControlsOptions } from "../options/map-controls-options";
 
-export class ThreeDRendererMapControls extends MapControls {
+export class Web3dComponentMapControls extends MapControls {
 
   private _resetKey: string;
 
   constructor(
     camera: PerspectiveCamera,
     viewportElement: HTMLDivElement,
-    initOptions?: Partial<ThreeDRendererMapControlsOptions>) {
+    initOptions?: Partial<Web3dComponentMapControlsOptions>) {
 
     super(camera, viewportElement);
     const options = {

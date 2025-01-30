@@ -1,14 +1,17 @@
 import { BufferGeometry, Color, Line, LineBasicMaterial, Vector3 } from 'three';
-import { AbstractOnlyTickableGroup, IOnlyTickable, IConfigurable, ITickParams } from '../abstract/abstract-group';
-import { DEFAULT_CROSS_POINTER_OPTIONS, ThreeDRendererCrossPointerOptions } from '../options/cross-pointer-options';
+import { IConfigurable, IOnlyTickable, ITickParams } from '../abstract/abstract-interfaces';
+import { AbstractOnlyTickableGroup } from '../abstract/abstract-only-tickable-group';
+import { DEFAULT_CROSS_POINTER_OPTIONS, Web3dComponentCrossPointerOptions } from '../options/cross-pointer-options';
 
-export class ThreeDRendererCrossPointer
+export class Web3dComponentCrossPointer
   extends AbstractOnlyTickableGroup<IOnlyTickable>
-  implements IConfigurable<ThreeDRendererCrossPointerOptions> {
+  implements IConfigurable<Web3dComponentCrossPointerOptions> {
   //
   public type: string;
+
   //
   private _material: LineBasicMaterial;
+
   private _originalDistanceToTarget: number;
 
   // =======================================
@@ -17,12 +20,12 @@ export class ThreeDRendererCrossPointer
   constructor(
     distanceToTarget: number,
     initActions?: Partial<IOnlyTickable>,
-    initOptions?: Partial<ThreeDRendererCrossPointerOptions>
+    initOptions?: Partial<Web3dComponentCrossPointerOptions>
   ) {
     //
     super(initActions);
     //
-    this.type = 'ThreeDRendererCrossPointer';
+    this.type = 'Web3dComponentCrossPointer';
     //
     this.userData.options = {
       ...DEFAULT_CROSS_POINTER_OPTIONS,
@@ -45,7 +48,7 @@ export class ThreeDRendererCrossPointer
   // PUBLIC
   // =======================================
   public updateWithOptions(
-    options: Partial<ThreeDRendererCrossPointerOptions>
+    options: Partial<Web3dComponentCrossPointerOptions>
   ): void {
     if (options.color !== undefined) {
       this.userData.options.color = options.color;
@@ -58,13 +61,16 @@ export class ThreeDRendererCrossPointer
       this.userData.options.autoScale = options.autoScale;
     }
   }
+
   public display(position: Vector3): void {
     this.visible = true;
     this.position.set(position.x, position.y, position.z);
   }
+
   public hide(): void {
     this.visible = false;
   }
+
   public tick(_deltaTime: number, params: ITickParams): void {
     this._update(params.distance);
   }
@@ -82,6 +88,7 @@ export class ThreeDRendererCrossPointer
       this._createCrossLine(this.userData.options.lineLength, 0, 0, Math.PI / 2)
     );
   }
+
   private _createCrossLine(
     lineLength: number,
     xRotation: number,
@@ -105,6 +112,7 @@ export class ThreeDRendererCrossPointer
       this._resize(distance / this._originalDistanceToTarget);
     }
   }
+
   //
   private _resize(ratio: number): void {
     this.scale.setScalar(ratio);

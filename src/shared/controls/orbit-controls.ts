@@ -1,12 +1,13 @@
 import { PerspectiveCamera, Vector3 } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { IConfigurable } from '../abstract/abstract-group';
-import { DEFAULT_ORBIT_CONTROLS_OPTIONS, ThreeDRendererOrbitControlsOptions } from '../options/orbit-controls-options';
+import { IConfigurable } from '../abstract/abstract-interfaces';
+import { DEFAULT_ORBIT_CONTROLS_OPTIONS, Web3dComponentOrbitControlsOptions } from '../options/orbit-controls-options';
 import { GetOptionValueUtil } from '../utils/get-option-value-util';
 
-export class ThreeDRendererOrbitControls extends OrbitControls implements IConfigurable<ThreeDRendererOrbitControlsOptions> {
+export class Web3dComponentOrbitControls extends OrbitControls implements IConfigurable<Web3dComponentOrbitControlsOptions> {
 
   private _resetKey: string;
+
   private _toggleEnabledKey: string;
 
   private _boundingChangeEvent: () => void;
@@ -16,7 +17,7 @@ export class ThreeDRendererOrbitControls extends OrbitControls implements IConfi
   constructor(
     camera: PerspectiveCamera,
     viewportElement: HTMLDivElement,
-    initOptions?: Partial<ThreeDRendererOrbitControlsOptions>
+    initOptions?: Partial<Web3dComponentOrbitControlsOptions>
   ) {
     super(camera, viewportElement);
     const options = {
@@ -43,7 +44,7 @@ export class ThreeDRendererOrbitControls extends OrbitControls implements IConfi
   }
 
   public updateWithOptions(
-    options: Partial<ThreeDRendererOrbitControlsOptions>
+    options: Partial<Web3dComponentOrbitControlsOptions>
   ): void {
     this._toggleEnabledKey = GetOptionValueUtil.getIfDefined(
       this._toggleEnabledKey,

@@ -13,19 +13,27 @@ export interface FirstPersonControlsJsmEventMap {
 export class FirstPersonControlsJsm extends Controls<FirstPersonControlsJsmEventMap> {
 
   movementSpeed = 1.0;
+
   lookSpeed = 0.005;
+
   lookVertical = true;
+
   autoForward = false;
 
   activeLook = true;
 
   heightSpeed = false;
+
   heightCoef = 1.0;
+
   heightMin = 0.0;
+
   heightMax = 1.0;
 
   constrainVertical = false;
+
   verticalMin = 0;
+
   verticalMax = Math.PI;
 
   mouseDragOn = false;
@@ -40,30 +48,45 @@ export class FirstPersonControlsJsm extends Controls<FirstPersonControlsJsmEvent
   private _autoSpeedFactor = 0.0;
 
   private _pointerX = 0;
+
   private _pointerY = 0;
 
   private _moveForward = false;
+
   private _moveBackward = false;
+
   private _moveLeft = false;
+
   private _moveRight = false;
+
   private _moveUp = false;
+
   private _moveDown = false;
 
   private _viewHalfX = 0;
+
   private _viewHalfY = 0;
 
   private _lat = 0;
+
   private _lon = 0;
 
   private _lookDirection = new Vector3();
+
   private _spherical = new Spherical();
+
   private _target = new Vector3();
 
   private _onPointerDown: (event: MouseEvent) => void;
+
   private _onPointerUp: (event: MouseEvent) => void;
+
   private _onPointerMove: (event: MouseEvent) => void;
+
   private _onKeyDown: (event: KeyboardEvent) => void;
+
   private _onKeyUp: (event: KeyboardEvent) => void;
+
   private _onContextMenu: (event: MouseEvent) => void;
 
   constructor(camera: PerspectiveCamera, domElement: HTMLElement | null) {
@@ -175,13 +198,13 @@ export class FirstPersonControlsJsm extends Controls<FirstPersonControlsJsmEvent
     if (this.constrainVertical) {
       phi = MathUtils.mapLinear(phi, 0, Math.PI, this.verticalMin, this.verticalMax);
     }
-    const position = this.object.position;
+    const {position} = this.object;
     this.target.setFromSphericalCoords(this.sphericalRadius, phi, theta).add(position);
     this.object.lookAt(this.target);
   }
 
   private _setOrientation(): void {
-    const quaternion = this.object.quaternion;
+    const {quaternion} = this.object;
     this._lookDirection.set(0, 0, - 1).applyQuaternion(quaternion);
     this._spherical.setFromVector3(this._lookDirection);
     this._lat = 90 - MathUtils.radToDeg(this._spherical.phi);

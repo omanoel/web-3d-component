@@ -1,6 +1,6 @@
 import { ColorRepresentation, CubeTexture } from 'three';
 
-export interface ThreeDRendererSceneOptions {
+export interface Web3dComponentSceneOptions {
   /**
    * Color property of the Scene's background. CSS predefined colors
    *
@@ -10,6 +10,6 @@ export interface ThreeDRendererSceneOptions {
   cubeTexture?: CubeTexture;
 }
 
-export const DEFAULT_SCENE_OPTIONS: ThreeDRendererSceneOptions = {
+export const DEFAULT_SCENE_OPTIONS: Web3dComponentSceneOptions = {
   backgroundColor: 'black'
 };

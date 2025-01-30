@@ -1,6 +1,6 @@
 import { WebGLRenderer } from 'three';
 
-export class ThreeDRendererWebGlRenderer extends WebGLRenderer {
+export class Web3dComponentWebGlRenderer extends WebGLRenderer {
   //
   constructor(viewportElement: HTMLDivElement) {
     super({ antialias: true });

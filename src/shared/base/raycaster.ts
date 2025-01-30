@@ -1,13 +1,13 @@
 import { Intersection, Raycaster, Vector2 } from 'three';
-import { ThreeDRendererCamera } from './camera';
-import { ThreeDRendererScene } from './scene';
-import { ThreeDRendererWebGlRenderer } from './web-gl-renderer';
-import { DEFAULT_RAYCASTER_OPTIONS, ThreeDRendererRaycasterOptions } from '../options/raycaster-options';
-import { IConfigurable } from '../abstract/abstract-group';
+import { Web3dComponentCamera } from './camera';
+import { Web3dComponentScene } from './scene';
+import { Web3dComponentWebGlRenderer } from './web-gl-renderer';
+import { DEFAULT_RAYCASTER_OPTIONS, Web3dComponentRaycasterOptions } from '../options/raycaster-options';
+import { IConfigurable } from '../abstract/abstract-interfaces';
 
 
-export class ThreeDRendererRaycaster extends Raycaster
-  implements IConfigurable<ThreeDRendererRaycasterOptions> {
+export class Web3dComponentRaycaster extends Raycaster
+  implements IConfigurable<Web3dComponentRaycasterOptions> {
 
   private _isActive = true;
 
@@ -27,10 +27,10 @@ export class ThreeDRendererRaycaster extends Raycaster
    */
   constructor(
     viewportElement: HTMLDivElement,
-    renderer: ThreeDRendererWebGlRenderer,
-    scene: ThreeDRendererScene,
-    camera: ThreeDRendererCamera,
-    initOptions?: Partial<ThreeDRendererRaycasterOptions>
+    renderer: Web3dComponentWebGlRenderer,
+    scene: Web3dComponentScene,
+    camera: Web3dComponentCamera,
+    initOptions?: Partial<Web3dComponentRaycasterOptions>
   ) {
     super();
     const options = {
@@ -85,7 +85,7 @@ export class ThreeDRendererRaycaster extends Raycaster
   }
 
   public updateWithOptions(
-    options: Partial<ThreeDRendererRaycasterOptions>
+    options: Partial<Web3dComponentRaycasterOptions>
   ): void {
     if (options.isActive !== undefined) {
       this._isActive = options.isActive;
@@ -118,9 +118,9 @@ export class ThreeDRendererRaycaster extends Raycaster
 
   private _handleMouseMove(
     mouseEvent: MouseEvent,
-    renderer: ThreeDRendererWebGlRenderer,
-    scene: ThreeDRendererScene,
-    camera: ThreeDRendererCamera,
+    renderer: Web3dComponentWebGlRenderer,
+    scene: Web3dComponentScene,
+    camera: Web3dComponentCamera,
   ): void {
     const intersects = this._getRaycasterIntersections(
       mouseEvent,
@@ -139,9 +139,9 @@ export class ThreeDRendererRaycaster extends Raycaster
 
   private _handleMouseDblClick(
     mouseEvent: MouseEvent,
-    renderer: ThreeDRendererWebGlRenderer,
-    scene: ThreeDRendererScene,
-    camera: ThreeDRendererCamera,
+    renderer: Web3dComponentWebGlRenderer,
+    scene: Web3dComponentScene,
+    camera: Web3dComponentCamera,
   ): void {
     const intersects = this._getRaycasterIntersections(
       mouseEvent,
@@ -156,9 +156,9 @@ export class ThreeDRendererRaycaster extends Raycaster
 
   private _getRaycasterIntersections(
     mouseEvent: MouseEvent,
-    renderer: ThreeDRendererWebGlRenderer,
-    scene: ThreeDRendererScene,
-    camera: ThreeDRendererCamera,
+    renderer: Web3dComponentWebGlRenderer,
+    scene: Web3dComponentScene,
+    camera: Web3dComponentCamera,
   ): Intersection[] {
     const mouse = new Vector2();
     const boundRect = renderer.domElement.getBoundingClientRect();

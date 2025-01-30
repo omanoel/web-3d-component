@@ -1,8 +1,9 @@
-import { BufferAttribute, BufferGeometry, CircleGeometry, DoubleSide, Group, Line, Line3, LineBasicMaterial, LineCurve, LineLoop, MathUtils, Mesh, MeshBasicMaterial, SphereGeometry, Vector2, Vector3 } from "three";
+import { BufferAttribute, BufferGeometry, CircleGeometry, DoubleSide, Group, Line, LineBasicMaterial, LineLoop, Mesh, MeshBasicMaterial, Vector3 } from "three";
 
 export class SphereGridHelper extends Group {
 
   private readonly LATITUDES_COUNTER = 8;
+
   private readonly LONGITUDES_COUNTER = 24;
 
   constructor(radius: number, segments: number) {
